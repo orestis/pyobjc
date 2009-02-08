@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 import ez_setup
 ez_setup.use_setuptools()
 
-from setuptools import setup
+from setuptools import setup, Extension
 try:
     from PyObjCMetaData.commands import extra_cmdclass, extra_options
 except ImportError:
@@ -18,7 +18,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-CoreText',
-    version='2.0',
+    version='2.2b1',
     description = "Wrappers for the framework CoreText on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -27,6 +27,11 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "CoreText" ],
     package_dir = { '': 'Lib' },
+    ext_modules = [
+            Extension('CoreText._manual',
+                [ 'Modules/_manual.m' ],
+                extra_link_args=['-framework', 'CoreServices']),
+    ],
     setup_requires = [ 
     ],
     install_requires = [ 
